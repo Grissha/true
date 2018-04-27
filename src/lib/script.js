@@ -83,12 +83,20 @@ async function setupDemo(setupDemo) {
   // получаем регистры
   const vr = await getParticipantRegistry('org.truevote.Voter');
   const cr = await getParticipantRegistry('org.truevote.Candidate');
+  const br = await getAssetRegistry('org.truevote.Bulletin');
 
   // Создаём кандидатов
   var candidates = [
     factory.newResource(NS, 'Candidate', 'Candidate1@village.com'),
     factory.newResource(NS, 'Candidate', 'Candidate2@village.com'),
     factory.newResource(NS, 'Candidate', 'Candidate3@village.com'),
+  ];
+  
+  // Создаём начальные биллютени
+  var bulletins = [
+    factory.newResource(NS, 'Bulletin', 'Bulletin1'),
+    factory.newResource(NS, 'Bulletin', 'Bulletin2'),
+    factory.newResource(NS, 'Bulletin', 'Bulletin3'),
   ];
 
   // create animals
@@ -110,18 +118,37 @@ async function setupDemo(setupDemo) {
   candidates[0].Party = 'Left';
   candidates[0].votes = 0;
   
-  candidates[0].candidateId = 222;
-  candidates[0].FIO = 'Petrov';
-  candidates[0].Party = 'Center';
-  candidates[0].votes = 0;
+  candidates[1].candidateId = 222;
+  candidates[1].FIO = 'Petrov';
+  candidates[1].Party = 'Center';
+  candidates[1].votes = 0;
   
-  candidates[0].candidateId = 333;
-  candidates[0].FIO = 'Sobolev';
-  candidates[0].Party = 'Right';
-  candidates[0].votes = 0;
-
+  candidates[2].candidateId = 333;
+  candidates[2].FIO = 'Sobolev';
+  candidates[2].Party = 'Right';
+  candidates[2].votes = 0;
+  
   // добавляем кандидатов в регистр
   await cr.addAll(candidates);
+  
+  // заполняем биллютени
+  bulletins[0].candidateId = 111;
+  bulletins[0].FIO = 'Ivanov';
+  bulletins[0].Party = 'Left';
+  bulletins[0].candidate = factory.newRelationship(NS, 'Candidate', candidates[0].candidateId);
+  
+  bulletins[1].candidateId = 222;
+  bulletins[1].FIO = 'Petrov';
+  bulletins[1].Party = 'Center';
+  bulletins[1].candidate = factory.newRelationship(NS, 'Candidate', candidates[1].candidateId);
+  
+  bulletins[2].candidateId = 333;
+  bulletins[2].FIO = 'Sobolev';
+  bulletins[2].Party = 'Right';
+  bulletins[2].candidate = factory.newRelationship(NS, 'Candidate', candidates[2].candidateId);
+
+  // добавляем бюллитени в регистр
+  await br.addAll(bulletins);
 
   // заполняем избирателей
   voters[0].voterId = 1;
