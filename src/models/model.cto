@@ -1,32 +1,37 @@
-namespace org.sample
+namespace org.truevote
 
-participant Elector identified by idElector {
-    o String idElector
-    o String FIO
-    o Boolean balance
+enum MovementStatus {
+	o IN_FIELD
+	o IN_TRANSIT
 }
 
-asset Bulleten identified by idCandidat{
-    o String idCandidat
+participant Voter identified by voterId {
+   o String voterId
+   o String FIO
+   o Boolean vote
+}
+
+asset Bulletin identified by bulletinId{
+    o String bulletinId
     o String FIO
     o String Party
-    --> Candidat candidat
+    o MovementStatus movementStatus
+    --> Candidate candidate
 }
 
-participant Candidat identified by idCandidat{
-o Integer idCandidat
-o String Party
-o String FIO
-o Integer balance
+participant Candidate identified by candidateId{
+    o String candidateId
+    o String Party
+    o String FIO
+    o Integer votes
 }
 
-transaction setVote{
-    o Boolean voted
-    --> Bulleten bulleten
+transaction setBulletin{
+	--> Bulletin bulletin
 }
 
-transaction acceptVote {
-
+transaction acceptVote{
+	--> Bulletin bulletin
 }
 
 transaction setupDemo{

@@ -59,9 +59,9 @@ rule CandidateAccessToHimself {
 
 rule VoterAcceptTrade{
     description: "Allow to change number of votes when accepting the trade"
-    participant(p): "org.truevote.Voter"
+    participant: "org.truevote.Voter"
     operation: UPDATE, READ
-    resource(r): org.truevote.Candidate
+    resource: "org.truevote.Candidate"
     transaction: "org.truevote.acceptVote"
     action: ALLOW
 }
@@ -69,7 +69,7 @@ rule VoterAcceptTrade{
 rule CandidateCreatesTrade{
     description: "Candidate creates trade"
     participant: "org.truevote.Candidate"
-    opearation: CREATE, READ
-    resource: org.truevote.setBulletin
+    operation: CREATE, READ
+    resource: "org.truevote.setBulletin"
     action: ALLOW
 }
