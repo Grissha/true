@@ -1,0 +1,33 @@
+namespace org.sample
+
+participant Elector identified by idElector {
+    o String idElector
+    o String FIO
+    o Boolean balance
+}
+
+asset Bulleten indetified by idCandidat{
+    o String idCandidat
+    o String FIO
+    o String Party
+    --> Candidat candidat
+}
+
+participant Candidat identified by idCandidat{
+o Integer idCandidat
+o String Party
+o String FIO
+o Integer balance
+}
+
+transaction setVote{
+    o Boolean voted
+    --> Bulleten bulleten
+}
+
+transaction acceptVote {
+
+}
+
+transaction setupDemo{
+}

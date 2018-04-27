@@ -1,0 +1,75 @@
+rule SystemACL {
+  description:  "System ACL to permit all access"
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule LedgerAccess {
+  description:  "Access to ledger"
+  participant: "org.truevote.**"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+rule VoterAccessToBulletin {
+  description: "Voter access"
+  participant(p): "org.truevote.Voter"
+  operation: READ
+  resource(r): "org.truevote.Bulletin"
+  condition: (r.movementStatus == 'IN_TRANSIT')
+  action: ALLOW
+}
+
+rule VoterAccessToHimself {
+  description: "Voter access to himself"
+  participant(p): "org.truevote.Voter"
+  operation: READ
+  resource(r): "org.truevote.Voter"
+  condition: (p.getIdentifier() == r.getIdentifier())
+  action: ALLOW
+}
+
+rule CandidateAccessToHimself {
+  description: "Candidate access to himself"
+  participant(p): "org.truevote.Candidate"
+  operation: READ
+  resource(r): "org.truevote.Candidate"
+  condition: (p.getIdentifier() == r.getIdentifier())
+  action: ALLOW
+}
+
+rule VoterAcceptTrade{
+    description: "Allow to change number of votes when accepting the trade"
+    participant(p): "org.truevote.Voter"
+    operation: UPDATE, READ
+    resource(r): org.truevote.Candidate
+    transaction: "org.truevote.acceptVote"
+    action: ALLOW
+}
+
+rule CandidateCreatesTrade{
+    description: "Candidate creates trade"
+    participant: "org.truevote.Candidate"
+    opearation: CREATE, READ
+    resource: org.truevote.setBulletin
+    action: ALLOW
+}
