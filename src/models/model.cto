@@ -6,7 +6,7 @@ participant Elector identified by idElector {
     o Boolean balance
 }
 
-asset Bulleten indetified by idCandidat{
+asset Bulleten identified by idCandidat{
     o String idCandidat
     o String FIO
     o String Party
