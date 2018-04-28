@@ -11,12 +11,18 @@ participant Voter identified by voterId {
    o Boolean vote
 }
 
+participant Counter identified by counterId {
+	o String counterId
+	o Integer count
+}
+
 asset Bulletin identified by bulletinId{
     o String bulletinId
     o String FIO
     o String Party
     o MovementStatus movementStatus
     --> Candidate candidate
+		--> Counter counter
 }
 
 participant Candidate identified by candidateId{
@@ -27,9 +33,9 @@ participant Candidate identified by candidateId{
 }
 
 transaction setVote{
-  --> Voter voter
+  	--> Voter voter
 	--> Bulletin bulletin
 }
 
-transaction setupDemo{
+transaction SetupDemo{
 }
