@@ -62,14 +62,6 @@ rule VoterAcceptTrade{
     participant: "org.truevote.Voter"
     operation: UPDATE, READ
     resource: "org.truevote.Candidate"
-    transaction: "org.truevote.acceptVote"
-    action: ALLOW
-}
-
-rule CandidateCreatesTrade{
-    description: "Candidate creates trade"
-    participant: "org.truevote.Candidate"
-    operation: CREATE, READ
-    resource: "org.truevote.setBulletin"
+    transaction: "org.truevote.setVote"
     action: ALLOW
 }
