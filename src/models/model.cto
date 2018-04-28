@@ -26,11 +26,8 @@ participant Candidate identified by candidateId{
     o Integer votes
 }
 
-transaction setBulletin{
-	--> Bulletin bulletin
-}
-
-transaction acceptVote{
+transaction setVote{
+  --> Voter voter
 	--> Bulletin bulletin
 }
 
